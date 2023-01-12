@@ -535,7 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605208ef58dd7634faa82670ec7ef835, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 6440694351279133696, guid: 14807e7d0bab8b94b8389cdd503a56a6, type: 3}
 --- !u!4 &1311490285
 Transform:
   m_ObjectHideFlags: 0
