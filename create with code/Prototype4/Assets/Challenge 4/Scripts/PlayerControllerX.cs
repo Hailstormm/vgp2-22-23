@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerControllerX : MonoBehaviour
 {
     private Rigidbody playerRb;
-    private float speed = 100;
+    private float speed = 500;
     private GameObject focalPoint;
 
     public bool hasPowerup;
     public GameObject powerupIndicator;
-    public int powerUpDuration = 10;
+    public int powerUpDuration = 5;
 
     private float normalStrength = 10; // how hard to hit enemy without powerup
     private float powerupStrength = 25; // how hard to hit enemy with powerup
@@ -40,6 +40,7 @@ public class PlayerControllerX : MonoBehaviour
             Destroy(other.gameObject);
             hasPowerup = true;
             powerupIndicator.SetActive(true);
+            StartCoroutine(PowerupCooldown());
         }
     }
 
