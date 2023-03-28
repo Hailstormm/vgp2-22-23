@@ -30,18 +30,7 @@ public class Target : MonoBehaviour
     {
         
     }
-
-    private void OnMouseDown()
-    {   
-        if(gameManager.isGameActive)
-        {
-            Destroy(gameObject);
-            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
-            gameManager.UpdateScore(pointValue);
-        }
         
-
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -65,6 +54,16 @@ public class Target : MonoBehaviour
     Vector3 RandomSpawnPos()
     {
         return new Vector3(Random.Range(-xRange, xRange), -ySpawnPos);
+    }
+
+    public void DestroyTarget()
+    {
+        if(gameManager.isGameActive)
+        {
+            Destroy(gameObject);
+            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+            gameManager.UpdateScore(pointValue);
+        }
     }
 }
 
