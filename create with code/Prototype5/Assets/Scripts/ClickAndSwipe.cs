@@ -21,7 +21,7 @@ public class ClickAndSwipe : MonoBehaviour
         trail.enabled = false;
         col.enabled = false;
 
-        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
