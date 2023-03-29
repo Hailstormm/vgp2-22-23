@@ -35,8 +35,13 @@ public class Target : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
+        // ! is read "not" so this reads " if the game object id
+        //NOT the bad object, and the game is running, then 
+        //take away a life
         if( !gameObject.CompareTag("Bad") && gameManager.isGameActive)
         {
+            //call to the UpdateLives script in GameManager
+            //-1 is the ARGUMENT to the method
             gameManager.UpdateLives(-1);
         }
     }

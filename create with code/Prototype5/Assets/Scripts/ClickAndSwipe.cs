@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(TrailRenderer), typeof(BoxCollider))]
 public class ClickAndSwipe : MonoBehaviour
 {
+    //so we can acess the GameManager Script and its 
+    //public variable and methods
     private GameManager gameManager;
     private Camera cam;
     private Vector3 mousePos;
@@ -20,7 +22,8 @@ public class ClickAndSwipe : MonoBehaviour
         col = GetComponent<BoxCollider>();
         trail.enabled = false;
         col.enabled = false;
-
+        //this finds the GameManager script so we can use 
+        //public variables and methods from it
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
