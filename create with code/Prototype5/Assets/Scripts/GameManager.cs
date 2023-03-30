@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(SpawnTarget());
         UpdateScore(0);
-        UpdateLives(10);
+        UpdateLives(3);
         titleScreen.gameObject.SetActive(false);
     }
 
