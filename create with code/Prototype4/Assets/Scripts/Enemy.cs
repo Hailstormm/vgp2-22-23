@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     private Rigidbody enemyRb;
+    private Rigidbody enemy2Rb;
     private GameObject player;
     public float speed = 3.0f;
 
@@ -12,6 +13,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         enemyRb = GetComponent<Rigidbody>();
+        enemy2Rb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
     }
 
