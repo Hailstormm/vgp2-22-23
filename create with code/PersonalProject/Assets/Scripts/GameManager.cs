@@ -1,26 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class SpawnManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
+    public TextMeshProUGUI scoreText;
+    private int score;
+
     public GameObject[] enemies;
     public GameObject powerup;
 
     private float zEnemySpawn = 15.0f;
     private float xSpawnRange = 16.0f;
-    private float zPowerupRange = 5.0f;
     private float ySpawn = 0.75f;
-
-    private float powerupSpawnTime = 10.0f;
-    private float enemySpawnTime = 3.0f;
-    private float startDelay = 1.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("SpawnRandomEnemy", startDelay, enemySpawnTime);
-        InvokeRepeating("SpawnPowerup", startDelay, powerupSpawnTime);
+        score = 0;
+        UpdateScore(0);
     }
 
     // Update is called once per frame
@@ -29,6 +28,12 @@ public class SpawnManager : MonoBehaviour
         
     }
 
+    void UpdateScore(int scoreToAdd)
+        {
+            score += scoreToAdd;
+            scoreText.text = "Score: " + score;
+        }
+    
     void SpawnRandomEnemy()
     {
         float randomX = Random.Range(-xSpawnRange, xSpawnRange);
@@ -37,15 +42,14 @@ public class SpawnManager : MonoBehaviour
         Vector3 spawnPos = new Vector3(randomX, ySpawn, zEnemySpawn);
 
         Instantiate(enemies[randomIndex], spawnPos, enemies[randomIndex].gameObject.transform.rotation);
+        UpdateScore(-5);
     }
 
-    void SpawnPowerup()
+    void OnCollisionEnter(Collision collision)
     {
-        float randomX = Random.Range(-xSpawnRange, xSpawnRange);
-        float randomZ = Random.Range(-zPowerupRange, zPowerupRange);
-
-        Vector3 spawnPos = new Vector3(randomX, ySpawn, randomZ);
-
-        Instantiate(powerup, spawnPos, powerup.gameObject.transform.rotation);
+        if(collision.gameObject.GetComponent<Enemy>())
+        {
+            collision.gameObject.GetComponent<Enemy>().UpdateScore(-5);
+        }
     }
 }
