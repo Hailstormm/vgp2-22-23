@@ -15,6 +15,15 @@ public class GameManager : MonoBehaviour
     private float xSpawnRange = 16.0f;
     private float ySpawn = 0.75f;
 
+    public TextMeshProUGUI gameOverText;
+    public bool isGameActive; //bool is short for boolean
+    public Button restartButton;
+    public GameObject titleScreen;
+    public TextMeshProUGUI livesText;
+    private int lives;
+    public GameObject pauseScreen;
+    private bool paused;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +34,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //check if the user has pressed the p key
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            ChangePaused();
+        }
     }
 
     void UpdateScore(int scoreToAdd)
@@ -50,6 +63,58 @@ public class GameManager : MonoBehaviour
         if(collision.gameObject.GetComponent<Enemy>())
         {
             collision.gameObject.GetComponent<Enemy>().UpdateScore(-5);
+        }
+    }
+
+    public void UpdateLives(int livesToChange)
+    {
+        lives += livesToChange;
+        livesText.text = "Lives: " + lives;
+        //tells us when to end the game if we're out of lives
+        if (lives <= 0)
+        {
+            //this is a method call, we're "calling" GameOver()
+            GameOver();
+        }
+    }
+
+    public void GameOver()
+    {
+        gameOverText.gameObject.SetActive(true);
+        restartButton.gameObject.SetActive(true);
+        isGameActive = false;
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void StartGame(int difficulty)
+    {
+        isGameActive = true;
+        score = 0;
+        spawnRate /= difficulty;
+
+        StartCoroutine(SpawnTarget());
+        UpdateScore(0);
+        UpdateLives(3);
+        titleScreen.gameObject.SetActive(false);
+    }
+
+    void ChangePaused()
+    {
+        if (!paused) // if not paused, pause game
+        {
+            paused = true;
+            pauseScreen.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else // else if paused, then unpause it
+        {
+            paused = false;
+            pauseScreen.SetActive(false);
+            Time.timeScale = 1;
         }
     }
 }
