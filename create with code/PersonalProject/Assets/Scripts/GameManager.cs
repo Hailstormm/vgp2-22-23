@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class GameManager : MonoBehaviour
     private int lives;
     public GameObject pauseScreen;
     private bool paused;
+    private float spawnRate = 5.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +60,7 @@ public class GameManager : MonoBehaviour
         Instantiate(enemies[randomIndex], spawnPos, enemies[randomIndex].gameObject.transform.rotation);
         UpdateScore(-5);
     }
-
+/*
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.GetComponent<Enemy>())
@@ -65,6 +68,7 @@ public class GameManager : MonoBehaviour
             collision.gameObject.GetComponent<Enemy>().UpdateScore(-5);
         }
     }
+    */
 
     public void UpdateLives(int livesToChange)
     {
@@ -92,14 +96,16 @@ public class GameManager : MonoBehaviour
 
     public void StartGame(int difficulty)
     {
+        Debug.Log("Start Game");
+        titleScreen.gameObject.SetActive(false);
         isGameActive = true;
         score = 0;
         spawnRate /= difficulty;
-
-        StartCoroutine(SpawnTarget());
         UpdateScore(0);
         UpdateLives(3);
-        titleScreen.gameObject.SetActive(false);
+        StartCoroutine(SpawnTarget());
+        
+        
     }
 
     void ChangePaused()
@@ -115,6 +121,17 @@ public class GameManager : MonoBehaviour
             paused = false;
             pauseScreen.SetActive(false);
             Time.timeScale = 1;
+        }
+    }
+
+        IEnumerator SpawnTarget()
+    {
+        while (isGameActive)
+        {
+            yield return new WaitForSeconds(spawnRate);
+            int index = Random.Range(0, enemies.Length);
+            Instantiate(enemies[index]);
+            
         }
     }
 }
